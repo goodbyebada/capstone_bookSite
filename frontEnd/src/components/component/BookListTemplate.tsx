@@ -5,7 +5,7 @@ import ShowBooks from "@components/containers/book/showBooks";
 import styles from "@styles/book.module.css";
 import { Data } from "@components/model/interfaceModel";
 
-export default function BookListTamplate({ dataList }: { dataList: Data[] }) {
+export default function BookListTemplate({ dataList }: { dataList: Data[] }) {
   /* [{item: [{title: "", link:""}]}, {item : []}] 을 받아온다 */
 
   return (
@@ -31,4 +31,3 @@ export default function BookListTamplate({ dataList }: { dataList: Data[] }) {
 //         </div>
 //     );
 // }
-

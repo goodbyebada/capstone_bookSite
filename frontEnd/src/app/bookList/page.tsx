@@ -5,17 +5,15 @@ import { useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Data, serverBook } from "@components/model/interfaceModel";
-import BookListTamplate from "@components/component/BookListTemplate";
 import LoadingComponent from "@components/component/LoadingComponent";
 import { serverBookToData } from "@components/model/interfaceModel";
 import { useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
+import BookListTemplate from "@components/component/BookListTemplate";
 
-// const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
-const localApiUrl = `http://localhost:8080/books/recommend`;
+import { localApiUrl } from "@data/const";
+// @data/const 파일에서 한번에 url 수정가능
 
-// const apiURL = "https://www.aladin.co.kr/ttb/api";
-const local = `http://localhost:3000/bookList`;
 const requestBaseUrl = localApiUrl;
 
 const BookList = () => {
@@ -24,7 +22,6 @@ const BookList = () => {
 
   const [datalist, setData] = useState<Data[]>([]);
   const [rawData, setRawData] = useState<serverBook[]>([]); // 원본 데이터를 저장할 상태 추가
-
 
   /**
    * 처음 렌더링될때 한번만 API 호출를 호출한다.
@@ -123,7 +120,7 @@ const BookList = () => {
   useEffect(() => {
     const fetchData = async () => {
       const gender = searchParams.get("gender") || "defaultGender";
-      const patronType = searchParams.get("patron_type") || "0";  // patron_type 기본값 "0"
+      const patronType = searchParams.get("patron_type") || "0"; // patron_type 기본값 "0"
       const birthdate = searchParams.get("birthdate") || "defaultBirthdate";
       const department = searchParams.get("department") || "defaultDepartment";
 
@@ -150,7 +147,7 @@ const BookList = () => {
       try {
         const response = await fetch(`${requestBaseUrl}?${params.toString()}`);
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const bookData: serverBook[] = await response.json();
         console.log("Received bookData:", bookData); // JSON 데이터를 로깅
@@ -167,29 +164,29 @@ const BookList = () => {
     fetchData();
   }, [searchParams]);
 
-
-//   return (
-//       <div>
-//         {datalist[0] ? (
-//             <BookListTamplate dataList={datalist} />
-//         ) : (
-//             <LoadingComponent />
-//         )}
-//       </div>
-//   );
-// };
+  //   return (
+  //       <div>
+  //         {datalist[0] ? (
+  //             <BookListTamplate dataList={datalist} />
+  //         ) : (
+  //             <LoadingComponent />
+  //         )}
+  //       </div>
+  //   );
+  // };
 
   return (
-      <div>
-        {rawData.length > 0 ? (  // 데이터를 수신했는지 확인
-            <>
-              <BookListTemplate dataList={datalist} />
-              <pre>{JSON.stringify(rawData, null, 2)}</pre>  {/* 원본 데이터를 JSON 형식으로 출력 */}
-            </>
-        ) : (
-            <LoadingComponent />
-        )}
-      </div>
+    <div>
+      {rawData.length > 0 ? ( // 데이터를 수신했는지 확인
+        <>
+          <BookListTemplate dataList={datalist} />
+          <pre>{JSON.stringify(rawData, null, 2)}</pre>{" "}
+          {/* 원본 데이터를 JSON 형식으로 출력 */}
+        </>
+      ) : (
+        <LoadingComponent />
+      )}
+    </div>
   );
 };
 
