@@ -7,13 +7,12 @@ import { Data, serverBook } from "@components/model/interfaceModel";
 import BookListTamplate from "@components/component/BookListTemplate";
 import LoadingComponent from "@components/component/LoadingComponent";
 import { serverBookToData } from "@components/model/interfaceModel";
-import { useDummy } from "@data/const";
+import { Api1Url, useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
 
 // const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
 // const apiURL = "https://www.aladin.co.kr/ttb/api";
 // const local = `http://localhost:3000/bookList`;
-const requestBaseUrl = `http://localhost:8080/books/recommend`;
 
 const BookList = () => {
   const pathname = usePathname();
@@ -34,7 +33,7 @@ const BookList = () => {
       return;
     }
 
-    const finalUrl = `${requestBaseUrl}?${params}`;
+    const finalUrl = `${Api1Url}?${params}`;
     console.log(finalUrl);
     fetch(finalUrl)
       .then((response) => {

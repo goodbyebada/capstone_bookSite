@@ -33,8 +33,8 @@ export default function AboutBook({
       setRecommandBookList(bookItemLsit);
       // console.log("새로 호출ㄴ");
     } else {
-      let bookId = bookData.id
-      if(bookId === null) {
+      let bookId = bookData.id;
+      if (bookId === null) {
         bookId = 0;
       }
       fetch(Api2Url + "?" + `id=${bookId}`)
