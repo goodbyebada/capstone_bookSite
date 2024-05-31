@@ -77,7 +77,7 @@ const UserInputForm = () => {
   const returnQueryString = (data: inputData) => {
     const { gender, patron_type, birthdate, department } = data;
 
-    const queryString = `gender=${gender}&patron-type=${patron_type}&birthdate=${birthdate}&department=${department}`;
+    const queryString = `gender=${gender}&patron_type=${patron_type}&birthdate=${birthdate}&department=${department}`;
     return queryString;
   };
 

@@ -10,10 +10,10 @@ import { serverBookToData } from "@components/model/interfaceModel";
 import { useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
 
-const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
+// const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
 // const apiURL = "https://www.aladin.co.kr/ttb/api";
-const local = `http://localhost:3000/bookList`;
-const requestBaseUrl = dummyApiUrl;
+// const local = `http://localhost:3000/bookList`;
+const requestBaseUrl = `http://localhost:8080/books/recommend`;
 
 const BookList = () => {
   const pathname = usePathname();
@@ -34,7 +34,9 @@ const BookList = () => {
       return;
     }
 
-    fetch(requestBaseUrl + "?" + params)
+    const finalUrl = `${requestBaseUrl}?${params}`;
+    console.log(finalUrl);
+    fetch(finalUrl)
       .then((response) => {
         return response.json(); // JSON 데이터를 반환하는 프로미스
       })
