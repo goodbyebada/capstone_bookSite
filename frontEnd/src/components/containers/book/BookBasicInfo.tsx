@@ -1,7 +1,7 @@
-import React from "react";
+"use client";
+
 import { BookItem } from "@components/model/interfaceModel";
 import styles from "@styles/aboutBook.module.css";
-
 import noImage from "@public/images/noImage.png";
 
 export default function BookBasicInfo({ bookData }: { bookData: BookItem }) {

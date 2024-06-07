@@ -1,7 +1,6 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Data, serverBook } from "@components/model/interfaceModel";
 import BookListTemplate from "@components/component/BookListTemplate";
@@ -9,6 +8,7 @@ import LoadingComponent from "@components/component/LoadingComponent";
 import { serverBookToData } from "@components/model/interfaceModel";
 import { Api1Url, useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
+import ShowBooks from "@components/containers/book/showBooks";
 
 // const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
 // const apiURL = "https://www.aladin.co.kr/ttb/api";
@@ -66,7 +66,8 @@ const BookList = () => {
   return (
     <div>
       {datalist[0] ? (
-        <BookListTemplate dataList={datalist} />
+        // <BookListTemplate dataList={datalist} />
+        <ShowBooks dataList={datalist} />
       ) : (
         <LoadingComponent isData={isData} />
       )}

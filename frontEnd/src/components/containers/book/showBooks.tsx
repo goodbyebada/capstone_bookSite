@@ -1,7 +1,7 @@
+"use client";
+
 import Book from "./book";
-
 import styles from "@styles/book.module.css";
-
 import { useState, useRef, useEffect, use } from "react";
 import { BookItem, Data } from "@components/model/interfaceModel";
 import { isEmptyObj } from "@components/model/interfaceModel";
@@ -29,13 +29,6 @@ export default function ShowBooks({ dataList }: { dataList: Data[] }) {
   const closeAboutBook = () => {
     setSelectedBook(null);
   };
-
-  //selectedBook의 값이 바뀌어 재렌더링시 실행될 콜백함수
-  //Tests
-  // useEffect(() => {
-  //   console.log(selectedBook);
-  //   console.log("selectBook값 변동");
-  // }, [selectedBook]);
 
   return (
     <>

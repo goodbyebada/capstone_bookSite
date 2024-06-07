@@ -188,3 +188,57 @@ export type loginFormType = {
   onSuccess: Function;
   onFail: Function;
 };
+
+// 알라딘 aPI 기준
+export interface AladinBookInfo {
+  title: string;
+  link: string;
+  author: string;
+  pubDate: string;
+  description: string;
+  isbn: string;
+  isbn13: string;
+  itemId: number;
+  priceSales: number;
+  priceStandard: number;
+  mallType: string;
+  stockStatus: string;
+  mileage: number;
+  cover: string;
+  categoryId: number;
+  categoryName: string;
+  publisher: string;
+  salesPoint: number;
+  adult: boolean;
+  fixedPrice: boolean;
+  customerReviewRank: number;
+  subInfo: Record<string, any>; // 특정 형식을 가지는 서브 정보의 형식이 없으므로 Record<string, any>으로 대체
+}
+
+//   알라딘 class 임시로 categoryId로 처리
+
+export function aladinToData(aladinBookList: AladinBookInfo[]): Data[] {
+  const datalist: Data[] = aladinBookList.map((elem) => {
+    const bookItem: BookItem = {
+      // id: 0,
+      title: elem.title.split("-")[0] ? elem.title.split("-")[0] : "",
+      author: elem.author ? elem.author : "",
+      publisher: elem.publisher ? elem.publisher : "",
+      publish_year: elem.pubDate ? parseInt(elem.pubDate.split("-")[0]) : 0,
+      class: elem.categoryId ? elem.categoryId : 0,
+      isbn: elem.isbn ? elem.isbn : "",
+      isbn13: elem.isbn13 ? elem.isbn13 : "",
+      description: elem.description ? elem.description : "",
+      categoryName: elem.categoryName ? elem.categoryName : "",
+      subInfo: undefined,
+      cover: elem.cover ? elem.cover : "",
+    };
+
+    const result: Data = {
+      item: [bookItem],
+    };
+    return result;
+  });
+
+  return datalist;
+}

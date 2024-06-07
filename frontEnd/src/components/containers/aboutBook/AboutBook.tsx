@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import {
   BookItem,
   serverBook,
@@ -56,7 +56,6 @@ export default function AboutBook({
     }
   }, [bookData]);
 
-  // const testDataList = returnBookList(dummyRecommandDataList);
   const [recommandBookList, setRecommandBookList] = useState<BookItem[]>();
 
   /**
@@ -88,7 +87,7 @@ export default function AboutBook({
             changeBook={changeBook}
           />
         ) : (
-          <div>"추천 도서 로딩중입니다"</div>
+          <div>추천 도서 로딩중입니다</div>
         )
       }
     </div>

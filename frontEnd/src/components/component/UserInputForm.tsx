@@ -17,7 +17,6 @@ import { patronType1departments, patronType2departments } from "@data/patron";
 const EMPTY_STRING = "";
 const DEFAULT_GENDER = "F";
 const DEFAULT_PATORN_ID = 1;
-
 const TEST_BIRTH = parseInt("1990");
 
 /**
@@ -152,18 +151,6 @@ const UserInputForm = () => {
     ) {
       submitcheckValueToChildComponent("departmentCheck", false);
     }
-
-    // // 공백이 아니고 올바른 조건이라면
-    // if (isFormComplete && checkAlltheInput(formData)) {
-    //   // 전부 작성했다면 bookList 경로 이동 쿼리문과 함께
-
-    //   const queryString = returnQueryString(formData);
-    //   router.push(routeUrl + "?" + queryString);
-    //   return;
-    // } else {
-    //   submitcheckValueToChildComponent("departmentCheck", false);
-    //   submitcheckValueToChildComponent("birthdateCheck", false);
-    // }
   };
 
   const handleInputChange = (fieldName: string, value: string | number) => {

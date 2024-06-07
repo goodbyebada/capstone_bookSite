@@ -11,6 +11,7 @@ export default function AboutBookTemplate({
   selectedBook: BookItem;
   clickEvent: () => void;
 }) {
+  // aboutBook은 데이터 없을 일이 없음 -> loading isData true로 처리
   const [currentBook, setBook] = useState<BookItem>(selectedBook);
 
   return (
@@ -34,7 +35,7 @@ export default function AboutBookTemplate({
             />
           </>
         ) : (
-          <LoadingComponent />
+          <LoadingComponent isData={true} />
         )}
       </AboutBookWrapper>
     </>
