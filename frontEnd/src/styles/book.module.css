@@ -48,6 +48,9 @@
 }
 
 @media (max-width: 721px) {
+  .show_book_list_container {
+    padding: 0 10rem;
+  }
   .show_book_list {
     grid-template-columns: repeat(2, 1fr);
   }

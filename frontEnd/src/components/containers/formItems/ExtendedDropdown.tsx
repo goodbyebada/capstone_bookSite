@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { initYear } from "@data/const";
 import { checkformData } from "@components/model/interfaceModel";
 
 // 1. 년도 드롭다운 ~ 1950 ~ 2005까지  55년치

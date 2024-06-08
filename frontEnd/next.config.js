@@ -2,15 +2,9 @@
 const nextConfig = {
   reactStrictMode: false,
   swcMinify: true,
-
-  // async rewrites() {
-  //   return [
-  //     {
-  //       destination: `${apiURL}/:path*`,
-  //       source: "/:path*",
-  //     },
-  //
-  // },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 module.exports = nextConfig;

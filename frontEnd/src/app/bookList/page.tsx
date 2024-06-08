@@ -10,6 +10,12 @@ import { useAladin } from "@data/const";
 import callBookListApi from "@components/utils/callBookListApi";
 import { Api1Url } from "@data/const";
 
+function Search() {
+  const searchParams = useSearchParams();
+
+  return <input placeholder="Search..." />;
+}
+
 export default function BookList() {
   const searchParams = useSearchParams();
   const params = decodeURI(`${searchParams}`);

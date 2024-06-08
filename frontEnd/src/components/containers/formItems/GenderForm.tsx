@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Dropdown from "./Dropdown";
+import Dropdown from "@components/containers/formItems/DropDown";
 
 interface GenderFormProps {
   onChange: (value: string) => void;
