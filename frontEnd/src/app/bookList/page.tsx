@@ -3,33 +3,40 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Data, serverBook } from "@components/model/interfaceModel";
-import BookListTemplate from "@components/component/BookListTemplate";
 import LoadingComponent from "@components/component/LoadingComponent";
-import { serverBookToData } from "@components/model/interfaceModel";
-import { Api1Url, useDummy } from "@data/const";
-import { dummyData } from "@data/dummyData";
 import ShowBooks from "@components/containers/book/showBooks";
-import getAladinData from "@components/utils/GetAladinData";
+import { aladinToData } from "@components/model/interfaceModel";
 import { useAladin } from "@data/const";
 import callBookListApi from "@components/utils/callBookListApi";
+import { Api1Url } from "@data/const";
 
-const BookList = () => {
+export default function BookList() {
   const searchParams = useSearchParams();
+  const params = decodeURI(`${searchParams}`);
+
   const [datalist, setData] = useState<Data[]>([]);
-  const [isData, setIsData] = useState<boolean>(true);
+  const [isFetched, setIsFecthed] = useState<boolean>(false);
 
   /**
    * 처음 렌더링될때 한번만 API 호출를 호출한다.
    */
   useEffect(() => {
-    const params = decodeURI(`${searchParams}`);
-    console.log(params);
-
     // 임시 알라딘 호출 함수
+
     if (useAladin) {
-      getAladinData("교통").then((covertedList) => {
-        setData(covertedList);
-      });
+      fetch("/api?" + params)
+        .then((res) => {
+          console.log(res);
+          return res.json();
+        })
+        .then((e) => {
+          console.log(e);
+          let convertedList = aladinToData(e);
+          console.log(convertedList);
+          setData(convertedList);
+          setIsFecthed(true);
+        });
+
       return;
     }
 
@@ -39,20 +46,14 @@ const BookList = () => {
     });
   }, []);
 
-  // 데이터의 유무에 따라 로딩컴포넌트를 띄울지, 404 화면을 띄울지 결정ㅎ
-  useEffect(() => {
-    datalist.length === 0 ? setIsData(false) : setIsData(true);
-  }, [datalist]);
-
   return (
     <div>
-      {datalist[0] ? (
+      {datalist.length > 0 ? (
         <ShowBooks dataList={datalist} />
       ) : (
-        <LoadingComponent isData={isData} />
+        // 데이터 리스트가 빈 경우 -> 로딩 또는 에러
+        <LoadingComponent isFecthed={isFetched} />
       )}
     </div>
   );
-};
-
-export default BookList;
+}

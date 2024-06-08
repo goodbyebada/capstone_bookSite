@@ -2,10 +2,9 @@
 
 import React from "react";
 import styles from "@styles/loading.module.css";
-import NotFound from "@components/NotFound";
 import { notFound } from "next/navigation";
 
-const Loading = ({ isData }: { isData: boolean }) => {
+const Loading = ({ isFecthed }: { isFecthed: boolean }) => {
   const isLoading = () => {
     return (
       <div className={styles.loading_container}>
@@ -16,7 +15,7 @@ const Loading = ({ isData }: { isData: boolean }) => {
   };
   return (
     // {!isData :<NotFound/>}
-    <>{isData ? isLoading() : notFound()}</>
+    <>{isFecthed ? notFound() : isLoading()}</>
   );
 };
 

@@ -1,5 +1,6 @@
 // "use client";
 import {
+  AladinBookInfo,
   BookItem,
   serverBook,
   serverBookToData,
@@ -8,9 +9,10 @@ import { useEffect, useState } from "react";
 import DetailContent from "./DetailContent";
 import { returnBookList } from "@components/model/interfaceModel";
 import BookBasicInfo from "../book/BookBasicInfo";
-import { Api2Url, useDummy } from "@data/const";
+import { Api2Url, useAladin, useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
 import { Data } from "@components/model/interfaceModel";
+import { aladinToData } from "@components/model/interfaceModel";
 
 /**
  *
@@ -24,27 +26,29 @@ export default function AboutBook({
   bookData: BookItem;
   changeBook: (bookItem: BookItem) => void;
 }) {
+  const [recommandBookList, setRecommandBookList] = useState<BookItem[]>();
+
   useEffect(() => {
     if (useDummy) {
       const bookData = dummyData;
       const convertedDataList: Data[] = serverBookToData(bookData);
       const bookItemLsit: BookItem[] = returnBookList(convertedDataList);
       setRecommandBookList(bookItemLsit);
-    } else {
-      let bookId = bookData.id;
-      if (bookId === null) {
-        bookId = 0;
-      }
-      fetch(Api2Url + "?" + `id=${bookId}`)
+      return;
+    }
+
+    if (useAladin) {
+      let category = bookData.categoryName.split(">")[0];
+
+      fetch("/api/recommand?" + `catergory=${category}`)
         .then((res) => {
           if (!res.ok) {
-            // 서버쪽에 404로 주는 case가 있어 예외처리 (front에서는 빈 리스트로 간주함)
             return [];
           }
           return res.json();
         })
-        .then((serverBookList: serverBook[]) => {
-          const dataList = serverBookToData(serverBookList);
+        .then((aladinBookList: AladinBookInfo[]) => {
+          const dataList = aladinToData(aladinBookList);
           return returnBookList(dataList);
         })
         .then((dataList: BookItem[]) => {
@@ -53,10 +57,34 @@ export default function AboutBook({
         .catch((e) => {
           console.log("서버에서 내려주는 데이터 형식 확인 필요");
         });
-    }
-  }, [bookData]);
 
-  const [recommandBookList, setRecommandBookList] = useState<BookItem[]>();
+      return;
+    }
+
+    //Capstone BackEndLogic
+    let bookId = bookData.id;
+    if (bookId === null) {
+      bookId = 0;
+    }
+    fetch(Api2Url + "?" + `id=${bookId}`)
+      .then((res) => {
+        if (!res.ok) {
+          // 서버쪽에 404로 주는 case가 있어 예외처리 (front에서는 빈 리스트로 간주함)
+          return [];
+        }
+        return res.json();
+      })
+      .then((serverBookList: serverBook[]) => {
+        const dataList = serverBookToData(serverBookList);
+        return returnBookList(dataList);
+      })
+      .then((dataList: BookItem[]) => {
+        setRecommandBookList(dataList);
+      })
+      .catch((e) => {
+        console.log("서버에서 내려주는 데이터 형식 확인 필요");
+      });
+  }, [bookData]);
 
   /**
    * 모델 2로 API 호출

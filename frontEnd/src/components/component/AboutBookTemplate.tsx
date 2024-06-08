@@ -35,7 +35,7 @@ export default function AboutBookTemplate({
             />
           </>
         ) : (
-          <LoadingComponent isData={true} />
+          <LoadingComponent isFecthed={false} />
         )}
       </AboutBookWrapper>
     </>
