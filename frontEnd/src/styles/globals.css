@@ -430,3 +430,23 @@ input:autofill:focus {
 .not-found-content p {
   font-size: 18px;
 }
+
+.nav-pills .nav-link.active {
+  background-color: var(--bs-blue);
+}
+
+@media (max-width: 511px) {
+  .nav-tabs {
+    display: flex;
+    flex-direction: column;
+
+    /* justify-content: center; */
+  }
+
+  .nav-tabs .nav-link.active {
+    background-color: var(--bs-blue);
+    color: white;
+
+    /* justify-content: center; */
+  }
+}
