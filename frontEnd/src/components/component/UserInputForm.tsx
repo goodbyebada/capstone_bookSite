@@ -13,6 +13,7 @@ import ExtendedDropdown from "@components/containers/formItems/ExtendedDropdown"
 import { checkformData } from "@components/model/interfaceModel";
 import { departments } from "@data/patron";
 import { patronType1departments, patronType2departments } from "@data/patron";
+import { useAladin } from "@data/const";
 
 const EMPTY_STRING = "";
 const DEFAULT_GENDER = "F";
@@ -125,8 +126,6 @@ const UserInputForm = () => {
       }));
     };
 
-    const btn = document.getElementById("btn");
-
     // 둘 다 적절하고 && 공백이 아니라면
     /**
      * // birthdate만 부적절하다면, (공백포함+ 조건 만족 X)
@@ -137,6 +136,7 @@ const UserInputForm = () => {
     // 공백이 아니고 올바른 조건이라면
     if (isFormComplete && checkAlltheInput(formData)) {
       // 전부 작성했다면 bookList 경로 이동 쿼리문과 함께
+
       const queryString = returnQueryString(formData);
       router.push(routeUrl + "?" + queryString);
       return;

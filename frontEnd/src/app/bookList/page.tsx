@@ -9,14 +9,12 @@ import { serverBookToData } from "@components/model/interfaceModel";
 import { Api1Url, useDummy } from "@data/const";
 import { dummyData } from "@data/dummyData";
 import ShowBooks from "@components/containers/book/showBooks";
-
-// const dummyApiUrl = `https://bc87b101-4a86-4419-a9e4-2648ec0bde58.mock.pstmn.io/getBookInfo`;
-// const apiURL = "https://www.aladin.co.kr/ttb/api";
-// const local = `http://localhost:3000/bookList`;
+import getAladinData from "@components/utils/GetAladinData";
+import { useAladin } from "@data/const";
+import callBookListApi from "@components/utils/callBookListApi";
 
 const BookList = () => {
   const searchParams = useSearchParams();
-
   const [datalist, setData] = useState<Data[]>([]);
   const [isData, setIsData] = useState<boolean>(true);
 
@@ -25,48 +23,30 @@ const BookList = () => {
    */
   useEffect(() => {
     const params = decodeURI(`${searchParams}`);
+    console.log(params);
 
-    if (useDummy) {
-      const bookData = dummyData;
-      const convertedDataList: Data[] = serverBookToData(bookData);
-      setData(convertedDataList);
+    // 임시 알라딘 호출 함수
+    if (useAladin) {
+      getAladinData("교통").then((covertedList) => {
+        setData(covertedList);
+      });
       return;
     }
 
-    const finalUrl = `${Api1Url}?${params}`;
-    console.log(finalUrl);
-    fetch(finalUrl)
-      .then((response) => {
-        if (!response.ok) {
-          alert("입력받은 정보는 대출내역이 부족합니다 :(");
-
-          setIsData(false);
-          return [];
-        }
-        const json = response.json();
-        alert("입력받은 정보는 대출내역이 부족합니다 :(");
-        console.log("api로 들어온 res json으로 변환");
-        // console.log(`${json}`);
-        setIsData(false);
-        return json; // JSON 데이터를 반환하는 프로미스
-      })
-      .then((bookData: serverBook[]) => {
-        console.log(bookData); // JSON 데이터를 로깅
-        const convertedDataList: Data[] = serverBookToData(bookData);
-        setData(convertedDataList);
-      })
-      .catch((error) => {
-        console.log("인터페이스 변환 실패, json로그와 함께 카톡주세요");
-        alert("입력받은 정보는 대출내역이 부족합니다 :(");
-        setIsData(false);
-        console.log(error);
-      });
+    //도서 호출 함수
+    callBookListApi(Api1Url, params).then((covertedList) => {
+      setData(covertedList);
+    });
   }, []);
+
+  // 데이터의 유무에 따라 로딩컴포넌트를 띄울지, 404 화면을 띄울지 결정ㅎ
+  useEffect(() => {
+    datalist.length === 0 ? setIsData(false) : setIsData(true);
+  }, [datalist]);
 
   return (
     <div>
       {datalist[0] ? (
-        // <BookListTemplate dataList={datalist} />
         <ShowBooks dataList={datalist} />
       ) : (
         <LoadingComponent isData={isData} />
