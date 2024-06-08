@@ -1,6 +1,17 @@
-## frontEnd 실행 방법
+### 프로젝트 소개
 
-> 1. 터미널로 frontEnd 디렉토리까지 접근
-> 2. brew install node@18 (npm, node 미설치 상태라면)
-> 3. npm install
-> 4. npm run dev
+GNN을 이용한 도서 추천 시스템 `독서하냥` 입니다. 유사한 책 추천을 통해 한양대학교 에리카 학생들의 종이책 도서 대출양을 늘리는 것을 목적으로 제작하였습니다.
+현재 이 프로젝트는 백엔드 개발이 로컬에서만 이뤄져, 임시로 알라딘 API로 대체해 호스팅하였습니다.
+
+### 역할
+
+- 프론트엔드 개발
+- 전반적인 사이트 디자인, 기획 담당
+
+### 개발 스택
+
+- React.js
+- Next.js
+- Bootstrap
+
+<a href ="https://book-recommendation-system-pink.vercel.app/">독서하냥 접속하기</a>
